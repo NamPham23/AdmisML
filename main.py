@@ -30,5 +30,5 @@ if gre is not None and toefl is not None and uni_rate is not None and sop is not
     label = str((model.predict(feature_vector))[0],[0])
 
     st.header('Result')
-    st.text(class_list[label])
+    st.text([label])
     
