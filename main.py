@@ -3,24 +3,30 @@ import pickle as pkl
 from PIL import Image
 import numpy as np
 
-class_list = {'0': 'FeMale', '1': 'Male'}
-st.title('Sentiment analysis from Vietnamese names')
 
-image = Image.open('vi-names.png')
-st.image(image)
+st.title('USA college admission rate prediction')
 
-input_ec = open('ec_vinames.pkl', 'rb')
-encoder = pkl.load(input_ec)
+#image = Image.open('vi-names.png')
+#st.image(image)
 
-input_md = open('lrc_vinames.pkl', 'rb')
-model = pkl.load(input_md)
 
-st.header('Write a (full) name')
-txt = st.text_area('', '')
+input = open('lr_admit.pkl', 'rb')
+model = pkl.load(input)
 
-if txt != '':
+st.header('input admission information')
+gre =st.number_input('Insert GRE Score')
+toefl =st.number_input('Insert TOEFL Score')
+uni_rate =st.number_input('Insert Universiy Rating')
+sop =st.number_input('Insert SOP')
+lor =st.number_input('Insert LOR')
+cgpa =st.number_input('Insert GPA')
+research = st.radio('choose Research', [0,1], index = None)
+
+
+
+if gre is not None and toefl is not None and uni_rate is not None and sop is not None and lor is not None and cgpa is not None and research is not None:
   if st.button('Predict'):
-    feature_vector = encoder.transform([txt])
+    feature_vector = np.array([gre, toefl, uni_rate, sop, lor, cgpa, research])
     label = str((model.predict(feature_vector))[0])
 
     st.header('Result')
